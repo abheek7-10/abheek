@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jericho</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Fira Code', monospace;
+        background-color: #0a0a0a;
+        color: #00ff99;
+        line-height: 1.7;
+        padding: 2rem;
+        max-width: 900px;
+        margin: auto;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        color: #00ff99;
+        text-shadow: 0 0 5px #00ff99;
+    }
+
+    p {
+        margin-bottom: 1.5rem;
+    }
+
+    a {
+        color: #00ff99;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .description-box {
+        background-color: #111;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-left: 4px solid #00ff99;
+        box-shadow: 0 0 15px rgba(0, 255, 153, 0.3);
+    }
+
+    .projects {
+        margin-top: 2rem;
+    }
+
+    .project {
+        background-color: #111;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid #00ff99;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 255, 153, 0.2);
+    }
+
+    .project-title {
+        font-weight: bold;
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .project-file {
+        margin-top: 0.5rem;
+        background: #000;
+        padding: 0.5rem;
+        border-radius: 3px;
+        border: 1px solid #00ff99;
+        color: #00ff99;
+    }
+
+    input[type="file"] {
+        margin-top: 0.5rem;
+        background: #0a0a0a;
+        color: #00ff99;
+        border: 1px solid #00ff99;
+        padding: 0.4rem;
+        border-radius: 3px;
+    }
+
+    footer {
+        margin-top: 3rem;
+        font-size: 0.9rem;
+        color: #009966;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+
+    <h1>Jericho</h1>
+
+    <div class="description-box">
+        <p>Welcome to <strong>Jericho</strong> — my personal project storeroom.
+           Here you'll find my code, experiments, and tools hosted right here — no external links.
+        </p>
+        <p>About me: I'm Abheek Bhattacharyya. I create tools, apps, and do AI experiments to push the limits of tech.That's it
+        </p>
+    </div>
+
+    <p>Browse and interact with my projects below:</p>
+
+    <section class="projects" id="projects-list">
+        <!-- Projects will appear here -->
+    </section>
+
+    <div>
+        <label for="upload">Upload a new project (HTML, JS, CSS, etc.):</label>
+        <input type="file" id="upload" multiple>
+    </div>
+
+    <footer>
+        © <span id="year"></span> Jericho — Built for hackers.
+    </footer>
+
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const uploadInput = document.getElementById('upload');
+    const projectsList = document.getElementById('projects-list');
+
+    uploadInput.addEventListener('change', (event) => {
+        const files = Array.from(event.target.files);
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const projectDiv = document.createElement('div');
+                projectDiv.className = 'project';
+                projectDiv.innerHTML = `
+                    <div class="project-title">${file.name}</div>
+                    <div class="project-file">
+                        <pre>${e.target.result.substring(0, 500)}${e.target.result.length > 500 ? '... (truncated)' : ''}</pre>
+                    </div>
+                `;
+                projectsList.appendChild(projectDiv);
+            };
+            reader.readAsText(file);
+        });
+    });
+</script>
+
+</body>
+</html>
